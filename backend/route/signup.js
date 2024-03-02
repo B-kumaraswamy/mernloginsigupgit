@@ -1,6 +1,7 @@
 import express from 'express'
 import signupuser from '../models/signupschema.js'
 import Loginuser from '../models/loginschema.js'
+import bcrypt from 'bcrypt';
 
 
 const SignupRouter = express.Router()
@@ -27,13 +28,14 @@ console.log("existinguser value ", existinguser)
 status : 400})
    }
    else {
+    const hashedPassword = await bcrypt.hash(password, 10)
     const user = new signupuser({
-        username, password, mobile, email
+        username, password : hashedPassword, mobile, email
     })
 
     await user.save().then(() => console.log("user registered successfully" , user))
     const loginUser = new Loginuser({
-        username, password
+        username, password : hashedPassword
     })
 
     await loginUser.save().then(() => console.log('user registered in login schema'))

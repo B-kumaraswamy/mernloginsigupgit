@@ -1,9 +1,10 @@
 import express from 'express';
-import mongoose, { mongo } from 'mongoose';
+import mongoose from 'mongoose';
 import cors from 'cors';
 import LoginRouter from './route/login.js';
 import SignupRouter from './route/signup.js';
 import ProductRouter from './route/products.js';
+import AddressRoute from './route/address.js';
 
 const Login = express()
 
@@ -16,6 +17,8 @@ Login.use('/login', LoginRouter)
 Login.use('/signup', SignupRouter)
 
 Login.use('/products', ProductRouter)
+
+Login.use('/address', AddressRoute)
 
 const port = 8080;
 
